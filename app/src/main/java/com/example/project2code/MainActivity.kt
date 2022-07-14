@@ -82,7 +82,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClick
             null,
             null,
             null,
-            null)
+            null) // End cursor
+
+
 
         with (cursor) {
             while (moveToNext()) {
