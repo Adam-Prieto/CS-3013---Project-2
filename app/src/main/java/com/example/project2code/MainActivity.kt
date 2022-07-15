@@ -25,7 +25,9 @@ import android.annotation.SuppressLint
 import android.widget.*
 import com.google.android.material.textfield.*
 
-class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener,
+    View.OnLongClickListener
+{
 
     val dateFormat = SimpleDateFormat("MM/dd/yyyy")
 
@@ -35,7 +37,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClick
 
     // TODOd #1: create the ItemHolder inner class
     // a holder object saves the references to view components of a recycler view item
-    private inner class ItemHolder(view: View): RecyclerView.ViewHolder(view) {
+    private inner class ItemHolder(view: View) : RecyclerView.ViewHolder(view)
+    {
         val txtID: TextView = view.findViewById(R.id.txtID)
         val txtDescription: TextView = view.findViewById(R.id.txtDescription)
         val txtCreationDate: TextView = view.findViewById(R.id.txtCreatedDate)
@@ -45,14 +48,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClick
 
     // TODOd #2: create the ItemAdapter inner class
     // an item adapter binds items from a list to holder objects in a recycler view
-    private inner class ItemAdapter(var bucketlist: List<Item>, var onClickListener: View.OnClickListener, var onLongClickListener: View.OnLongClickListener): RecyclerView.Adapter<ItemHolder>() {
+    private inner class ItemAdapter(
+        var bucketlist: List<Item>,
+        var onClickListener: View.OnClickListener,
+        var onLongClickListener: View.OnLongClickListener
+                                   ) : RecyclerView.Adapter<ItemHolder>()
+    {
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false)
-            return ItemHolder(view, )
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int
+                                       ): ItemHolder
+        {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_list, parent, false)
+            return ItemHolder(view)
         }
 
-        override fun onBindViewHolder(holder: ItemHolder, position: Int) {
+        override fun onBindViewHolder(holder: ItemHolder, position: Int)
+        {
             val item = bucketlist[position]
             holder.txtID.text = item.id.toInt().toString()
             holder.txtDescription.text = item.description
@@ -62,7 +76,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClick
             holder.itemView.setOnClickListener(onClickListener)
         }
 
-        override fun getItemCount(): Int {
+        override fun getItemCount(): Int
+        {
             return bucketlist.size
         }
     }
@@ -71,7 +86,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClick
     // TODOd #3: populate the recycler view
     // this function should query the database for all of the bucket list items; then use the list to update the recycler view's adapter
     // don't forget to call "sort()" on your list so the items are displayed in the correct order
-    fun populateRecyclerView() {
+    fun populateRecyclerView()
+    {
 
         val db = dbHelper.readableDatabase
         val items = mutableListOf<Item>()
@@ -82,18 +98,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClick
             null,
             null,
             null,
-            null) // End cursor
+            null
+                             ) // End cursor
 
 
 
-        with (cursor) {
-            while (moveToNext()) {
-                val id    = getInt(0)
+        with(cursor) {
+            while (moveToNext())
+            {
+                val id = getInt(0)
                 val description = getString(1)
                 val creationDate = Date(2)
                 val updateDate = Date(3)
                 val status = getInt(4)
-                val item = Item(id, description, creationDate, updateDate, status)
+                val item =
+                    Item(id, description, creationDate, updateDate, status)
                 items.add(item)
                 items.sort()
             }
@@ -101,7 +120,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClick
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -110,8 +130,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClick
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         populateRecyclerView()
-
-
 
 
         // TODOd #5: initialize the floating action button
@@ -125,15 +143,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClick
 
     }
 
-    override fun onResume() {
+    override fun onResume()
+    {
         super.onResume()
         populateRecyclerView()
     }
 
     // TODOd #6: call CreateUpdateActivity for update
     // don't forget to pass the item's id to the CreateUpdateActivity via the intent
-    override fun onClick(view: View?) {
-        if (view != null) {
+    override fun onClick(view: View?)
+    {
+        if (view != null)
+        {
 
             val id = view.findViewById<TextView>(R.id.txtID).text
             val intent = Intent(this, CreateUpdateActivity::class.java)
@@ -144,31 +165,52 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClick
         }
     }
 
-    // TODO #7: delete the long tapped item after a yes/no confirmation dialog
-    override fun onLongClick(view: View?): Boolean {
+    // TODOd #7: delete the long tapped item after a yes/no confirmation dialog
+    override fun onLongClick(view: View?): Boolean
+    {
 
-        class MyDialogInterfaceListener(val id: Int): DialogInterface.OnClickListener {
-            override fun onClick(dialogInterface: DialogInterface?, which: Int) {
-                if (which == DialogInterface.BUTTON_POSITIVE) {
-                    try {
-
-                    } catch (ex: Exception) {
-
-
-
-
-
+        class MyDialogInterfaceListener(val name: String) :
+            DialogInterface.OnClickListener
+        {
+            override fun onClick(
+                dialogInterface: DialogInterface?,
+                which: Int)
+            {
+                if (which == DialogInterface.BUTTON_POSITIVE)
+                {
+                    try
+                    {
+                        val db = dbHelper.writableDatabase
+                        db.execSQL(
+                            """
+                            DELETE FROM items
+                            WHERE name = "${name}"
+                        """
+                                  )
+                        populateRecyclerView()
+                    }
+                    catch (ex: Exception)
+                    {
 
                     }
                 }
             }
         }
 
-        if (view != null) {
-
+        if (view != null)
+        {
+            val name =
+                view.findViewById<TextView>(R.id.txtDescription).text.toString()
+            val alertDialogBuilder = AlertDialog.Builder(this)
+            alertDialogBuilder.setMessage("Are you sure you want to delete item named ${name}?")
+            alertDialogBuilder.setPositiveButton("Yes",
+                MyDialogInterfaceListener(name))
+            alertDialogBuilder.setNegativeButton("No",
+                MyDialogInterfaceListener(name))
+            alertDialogBuilder.show()
             return true
         }
         return false
-    } // End onLongClick
+    }
 
 } // End MainActivity class
