@@ -5,33 +5,61 @@
     android:orientation="vertical"
     android:padding="15dp">
 
-<!--  Add code here for the eventual icon next to each entry.-->
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"/>-->
-
     <TextView
-        android:id="@+id/txtDescription"
+        android:id="@+id/txtId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:visibility="invisible" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/txtID"
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/txtCreatedDate"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Created on: " />
+
+        <TextView
+            android:id="@+id/txtCreationDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/txtLastUpdated"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last updated on: " />
+
+        <TextView
+            android:id="@+id/txtUpdatedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </LinearLayout>

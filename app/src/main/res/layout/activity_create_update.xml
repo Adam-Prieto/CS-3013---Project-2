@@ -12,65 +12,48 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:padding="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Task: "
+                android:text="Description: "
                 android:textSize="20dp" />
 
             <EditText
-                android:id="@+id/edtTask"
+                android:id="@+id/edtDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp" />
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:padding="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Creation at: "
+                android:text="Status: "
                 android:textSize="20dp" />
 
-            <EditText
-                android:id="@+id/edtCreationDate"
+            <Spinner
+                android:id="@+id/spnCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp" />
-
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Last updated on: "
-                android:textSize="20dp" />
-
-            <EditText
-                android:id="@+id/edtLastUpdated"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:textSize="20dp" />
-
-        </LinearLayout>
         <Button
             android:id="@+id/btnCreateEvent"
-            android:text="Create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
+
+
 </ScrollView>

@@ -14,7 +14,7 @@ class Item(
     var description: String,
     var creationDate: Date,
     var updateDate: Date,
-            status: Int): Comparable<Item> {
+    status: Int): Comparable<Item> {
 
     var status = if (status in 0..2) status else SCHEDULED
         set(value) {
